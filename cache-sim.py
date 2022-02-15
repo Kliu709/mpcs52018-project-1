@@ -624,10 +624,12 @@ if __name__ == "__main__":
         b = list(range(n*sz, 2*n*sz, sz))
         c = list(range(2*n*sz, 3*n*sz, sz))
 
-        # for i in range(n):
-        #     myCpu.storeDouble(address=a[i], value = i)
-        #     myCpu.storeDouble(address=b[i], value=2*i)
-        #     myCpu.storeDouble(address=c[i], value=0)
+        for i in range(n):
+            myCpu.storeDouble(address=a[i], value = i)
+            myCpu.storeDouble(address=b[i], value=2*i)
+            myCpu.storeDouble(address=c[i], value=0)
+        new_cache = Cache(ram, input_r)
+        myCpu=CPU(new_cache)
         
         register0 = 3
         for i in range(n):
@@ -636,6 +638,12 @@ if __name__ == "__main__":
             register3 = myCpu.loadDouble(b[i])
             register4 = myCpu.addDouble(register2, register3)
             myCpu.storeDouble(c[i], register4)
+        
+        result = 0 
+        for i in range(n):
+            result += myCpu.loadDouble(c[i])
+        
+        print(f"result: {result}")
 
         
 
